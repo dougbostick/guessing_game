@@ -8,6 +8,7 @@ class App extends React.Component {
       playersGuess: null,
       pastGuesses: [],
       winningNumber: null, //generateWinningNumber();
+      status: "",
     };
     this.checkGuess = this.checkGuess.bind(this);
     this.playersGuessSubmission = this.playersGuessSubmission.bind(this);
@@ -38,7 +39,7 @@ class App extends React.Component {
 
   difference() {
     let diff = this.state.playersGuess - this.state.winningNumber;
-    console.log("diff", Math.abs(diff));
+    // console.log("diff", Math.abs(diff));
     return Math.abs(diff);
   }
 
@@ -55,38 +56,41 @@ class App extends React.Component {
     if (num < 1 || num > 100 || isNaN(num)) {
       throw "That is an invalid guess.";
     }
-    this.setState({ pastGuesses: [...this.state.pastGuesses, num] });
+    // this.setState({ pastGuesses: [...this.state.pastGuesses, num] });
 
     console.log(this.state);
     return this.checkGuess();
   }
 
   checkGuess() {
-    let text = "";
+    console.log("checkguess diff", this.difference());
+
     if (this.state.playersGuess === this.winningNumber) {
-      text = "You Win!";
+      this.setState({ status: "You Win!" });
     }
     if (this.state.pastGuesses.includes(this.playersGuess)) {
-      text = "You have already guessed that number.";
+      this.setState({ status: "You have already guessed that number." });
     } else {
-      this.state.pastGuesses.push(this.playersGuess);
+      this.setState({
+        pastGuesses: [...this.state.pastGuesses, this.state.playersGuess],
+      });
     }
     if (this.state.pastGuesses.length > 4) {
-      text = "You Lose.";
+      this.setState({ status: "You Lose!" });
     }
     if (this.difference() < 10) {
-      text = "You're burning up!";
+      this.setState({ status: "You're burning up!" });
     }
     if (this.difference() < 25) {
-      text = "You're lukewarm.";
+      this.setState({ status: "You're lukewarm." });
     }
     if (this.difference() < 50) {
-      text = "You're a bit chilly.";
+      this.setState({ status: "You're a bit chilly." });
     }
     if (this.difference() < 100) {
-      text = "You're ice cold!";
+      this.setState({ status: "You're ice cold!" });
     }
-    console.log("text", text);
+    console.log("state after check", this.state);
     return text;
   }
 
@@ -115,6 +119,7 @@ class App extends React.Component {
           <button>Play Again</button>
           <button>Hint</button>
         </form>
+        <div>{this.state.status}</div>
       </div>
     );
   }
