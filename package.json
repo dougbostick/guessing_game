@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "webpack",
+    "build:dev": "webpack --watch --mode=development",
+    "start:dev": "nodemon server --ignore dist --ignore src & npm run build:dev"
   },
   "keywords": [],
   "author": "",
