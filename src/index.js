@@ -64,34 +64,36 @@ class App extends React.Component {
 
   checkGuess() {
     console.log("checkguess diff", this.difference());
+    let dif = this.difference();
+    console.log("dif", dif);
 
-    if (this.state.playersGuess === this.winningNumber) {
-      this.setState({ status: "You Win!" });
+    if (this.state.playersGuess === this.state.winningNumber) {
+      return this.setState({ status: "You Win!" });
     }
     if (this.state.pastGuesses.includes(this.playersGuess)) {
-      this.setState({ status: "You have already guessed that number." });
+      return this.setState({ status: "You have already guessed that number." });
     } else {
       this.setState({
         pastGuesses: [...this.state.pastGuesses, this.state.playersGuess],
       });
+      if (this.state.pastGuesses.length > 4) {
+        return this.setState({ status: "You Lose!" });
+      }
     }
-    if (this.state.pastGuesses.length > 4) {
-      this.setState({ status: "You Lose!" });
-    }
+
     if (this.difference() < 10) {
-      this.setState({ status: "You're burning up!" });
+      return this.setState({ status: "You're burning up!" });
     }
     if (this.difference() < 25) {
-      this.setState({ status: "You're lukewarm." });
+      return this.setState({ status: "You're lukewarm." });
     }
     if (this.difference() < 50) {
-      this.setState({ status: "You're a bit chilly." });
+      return this.setState({ status: "You're a bit chilly." });
     }
     if (this.difference() < 100) {
-      this.setState({ status: "You're ice cold!" });
+      return this.setState({ status: "You're ice cold!" });
     }
     console.log("state after check", this.state);
-    return text;
   }
 
   provideHint() {
