@@ -155,7 +155,8 @@ class App extends React.Component {
     const hintInstructions =
       this.state.pastGuesses.includes(this.state.winningNumber) ||
       this.state.pastGuesses.length < 3 ||
-      this.state.pastGuesses.length > 4 ? null : (
+      this.state.pastGuesses.length > 4 ||
+      this.state.hint.length ? null : (
         <p>You can ask for a hint!</p>
       );
 
@@ -207,14 +208,16 @@ class App extends React.Component {
             className={
               this.state.pastGuesses.length > 4 ||
               this.state.pastGuesses.includes(this.state.winningNumber) ||
-              this.state.pastGuesses.length < 3
+              this.state.pastGuesses.length < 3 ||
+              this.state.hint.length
                 ? "disabled"
                 : null
             }
             disabled={
               this.state.pastGuesses.length > 4 ||
               this.state.pastGuesses.includes(this.state.winningNumber) ||
-              this.state.pastGuesses.length < 3
+              this.state.pastGuesses.length < 3 ||
+              this.state.hint.length
             }
             onClick={() => this.provideHint()}
           >
