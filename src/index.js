@@ -126,11 +126,19 @@ class App extends React.Component {
 
   render() {
     console.log("state", this.state);
-    const hintDiv = this.state.pastGuesses.includes(this.state.winningNumber)
-      ? null
-      : this.state.hint.map((hint) => {
-          return <div key={hint}> {hint}</div>;
-        });
+    const hintDiv = this.state.hint.length ? (
+      <div>
+        Hint:
+        {this.state.hint.map((hint) => {
+          return (
+            <div key={hint} className="hints">
+              {" "}
+              {hint}
+            </div>
+          );
+        })}
+      </div>
+    ) : null;
     const prevGuesses = this.state.pastGuesses.map((guess) => {
       return (
         <div key={guess} className="guess">
