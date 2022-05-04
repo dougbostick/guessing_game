@@ -146,12 +146,13 @@ class App extends React.Component {
         </div>
       );
     });
-    const instructions = this.state.pastGuesses.length ? null : (
-      <p>
-        Guess a number between 1-100, <br></br> you only have 5 chances!{" "}
-        <br></br> Good luck!
-      </p>
-    );
+    const instructions =
+      this.state.pastGuesses.length || this.state.status !== "" ? null : (
+        <p>
+          Guess a number between 1-100, <br></br> you only have 5 chances!{" "}
+          <br></br> Good luck!
+        </p>
+      );
     const hintInstructions =
       this.state.pastGuesses.includes(this.state.winningNumber) ||
       this.state.pastGuesses.length < 3 ||
@@ -166,28 +167,30 @@ class App extends React.Component {
         <div className="hint">{hintDiv}</div>
         <h3>Previous Guesses: </h3>
         <div className="guess_div">{prevGuesses}</div>
+        <div className="submit form">
+          <form onSubmit={this.playersGuessSubmission} className="form">
+            <input
+              placeholder="input guess"
+              maxLength={3}
+              onChange={(ev) =>
+                this.setState({ playersGuess: parseInt(ev.target.value) })
+              }
+            />
 
-        <form onSubmit={this.playersGuessSubmission} className="form">
-          <input
-            placeholder="input guess"
-            onChange={(ev) =>
-              this.setState({ playersGuess: parseInt(ev.target.value) })
-            }
-          />
-
-          <button
-            type="submit"
-            disabled={
-              this.state.pastGuesses.length > 4 ||
-              this.state.pastGuesses.includes(this.state.winningNumber)
-            }
-            className="submit"
-            value={this.state.playersGuess}
-            onClick={() => this.clear()}
-          >
-            Submit Guess
-          </button>
-        </form>
+            <button
+              type="submit"
+              disabled={
+                this.state.pastGuesses.length > 4 ||
+                this.state.pastGuesses.includes(this.state.winningNumber)
+              }
+              className="submit"
+              value={this.state.playersGuess}
+              onClick={() => this.clear()}
+            >
+              Submit Guess
+            </button>
+          </form>
+        </div>
         <div className="buttons">
           <button
             className={
